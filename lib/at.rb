@@ -31,3 +31,5 @@ module At
     @_method_to_instance_variable_proxy ||= MethodToInstanceVariableProxy.new(self)
   end
 end
+
+require 'at/core_ext'

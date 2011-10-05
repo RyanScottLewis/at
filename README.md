@@ -28,6 +28,8 @@ _get_ the value of the instance variable.
 `At` solves these problems.
 
 ```ruby
+require 'at'
+
 class User
   def initialize(first_name=nil, last_name=nil)
     @first_name, @last_name = first_name, last_name
