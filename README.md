@@ -1,7 +1,7 @@
 # At
 
 `At` is a small library that allows you to access instance variables on an object as 
-if they were attr_accessors for testing purposes.
+if they were `attr_accessor`s for testing purposes.
 
 ## Install
 
@@ -21,7 +21,7 @@ If I want to test the output of the `full_name` method in my `User` class
 below, I would normally have three options for testing all possible outcomes; 
 initialize a `User` object for each test case, initialize one `User` object and 
 use `instance_eval` to set the instance variables individually, or create 
-attr_accessors for each instance variable I would like to test. In Rspec, I 
+`attr_accessor`s for each instance variable I would like to test. In Rspec, I 
 can use `assigns` to test the value of the instance variable, but I can't 
 _get_ the value of the instance variable.
 
