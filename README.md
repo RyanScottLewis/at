@@ -52,6 +52,8 @@ describe User do
 end
 ```
 
+Check out the specs for a better usage example.
+
 ## Contributing
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
