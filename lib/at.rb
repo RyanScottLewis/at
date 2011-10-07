@@ -1,6 +1,9 @@
 require 'pathname'
+require 'active_support/concern'
 
 module At
+  extend ActiveSupport::Concern
+  
   VERSION ||= Pathname.new(__FILE__).dirname.join('..', 'VERSION').read
   
   class MethodToInstanceVariableProxy
@@ -27,8 +30,10 @@ module At
     end
   end
   
-  def at
-    @_method_to_instance_variable_proxy ||= MethodToInstanceVariableProxy.new(self)
+  module InstanceMethods
+    def at
+      @_method_to_instance_variable_proxy ||= MethodToInstanceVariableProxy.new(self)
+    end
   end
 end
 
