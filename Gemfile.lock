@@ -21,6 +21,7 @@ GEM
     rspec-instafail (0.1.8)
     rspec-mocks (2.6.0)
     ruby-progressbar (0.0.10)
+    watchr (0.7)
 
 PLATFORMS
   ruby
@@ -29,3 +30,4 @@ DEPENDENCIES
   at!
   fuubar (~> 0.0.6)
   rspec (~> 2.6.0)
+  watchr (~> 0.7.0)

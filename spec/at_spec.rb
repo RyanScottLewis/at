@@ -21,6 +21,8 @@ describe User do
   end
   
   describe "#full_name" do
+    subject { User.new }
+    
     it "should correctly output the full name" do
       subject.at.first_name = "John"
       subject.at.last_name = "Doe"
