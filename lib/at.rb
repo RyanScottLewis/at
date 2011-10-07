@@ -14,7 +14,8 @@ module At
     def method_missing(meth, *args, &blk)
       @parent.instance_eval do
         if match = meth.to_s.match(/(.*)\=$/)
-          instance_variable_set("@#{match[1]}", args)
+          value = args.length == 1 ? args.first : args
+          instance_variable_set("@#{match[1]}", value)
         else
           if block_given?
             instance_variable_set("@#{meth}", args.empty? ? args : blk.call)
@@ -22,6 +23,7 @@ module At
             if args.empty?
               instance_variable_get("@#{meth}")
             else
+                value = args.length == 1 ? args.first : args
               instance_variable_set("@#{meth}", value)
             end
           end

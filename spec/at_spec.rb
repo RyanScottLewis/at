@@ -1,5 +1,23 @@
 require 'spec_helper'
 
+class Configuration
+  attr_reader :configuration
+  
+  def initialize
+    @configuration = "default"
+  end
+end
+
+describe Configuration do
+  describe "#configuration" do
+    it "should return the @configuration instance variable" do
+      subject.configuration.should == "default"
+      subject.at.configuration = "the result"
+      subject.configuration.should == "the result"
+    end
+  end
+end
+
 class User
   def initialize(first_name=nil, last_name=nil)
     @first_name, @last_name = first_name, last_name
@@ -21,8 +39,6 @@ describe User do
   end
   
   describe "#full_name" do
-    subject { User.new }
-    
     it "should correctly output the full name" do
       subject.at.first_name = "John"
       subject.at.last_name = "Doe"
