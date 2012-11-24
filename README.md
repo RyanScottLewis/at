@@ -3,17 +3,25 @@
 `At` is a small library that allows you to access instance variables on an object as 
 if they were `attr_accessor`s for testing purposes.
 
-## Install
-
-Add to your Gemfile (usually within a :test or :development group):
+Basically, `at` directly translates this:
 
 ```ruby
-gem 'at'
+value = object.instance_eval { @instance_variable }
+object.instance_eval { @instance_variable = "#{value}!" }
 ```
 
-Or simply install via RubyGems:
+into this:
 
-    gem install at
+```ruby
+value = object.at.instance_variable
+object.at.instance_variable = "#{value}!"
+```
+
+## Install
+
+### Bundler: `gem 'at'`
+
+### RubyGems: `gem install at`
 
 ## Usage
 
@@ -40,14 +48,12 @@ class User
   end
 end
 
-describe User do
-  describe "#full_name" do
-    it "should output the full name correctly" do
-      subject.at.first_name = "John"
-      subject.at.last_name = "Doe"
+describe User, '#full_name' do
+  it 'should output the full name correctly' do
+    subject.at.first_name = 'John'
+    subject.at.last_name = 'Doe'
       
-      subject.full_name.should == "John Doe"
-    end
+    subject.full_name.should == 'John Doe'
   end
 end
 ```
@@ -66,4 +72,6 @@ Check out the specs for a better usage example.
 
 ## Copyright
 
-Copyright (c) 2010 Ryan Lewis. See LICENSE for details.
+Copyright © 2012 Ryan Scott Lewis <ryan@rynet.us>.
+
+The MIT License (MIT) - See LICENSE for further details.

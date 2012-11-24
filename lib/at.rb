@@ -1,42 +1,39 @@
-require 'pathname'
-require 'active_support/concern'
+require 'version'
 
 module At
-  extend ActiveSupport::Concern
   
-  VERSION ||= Pathname.new(__FILE__).dirname.join('..', 'VERSION').read
+  is_versioned
   
   class MethodToInstanceVariableProxy
+    
     def initialize(parent)
       @parent = parent
     end
     
-    def method_missing(meth, *args, &blk)
+    def method_missing(meth, *args)
       @parent.instance_eval do
+        
         if match = meth.to_s.match(/(.*)\=$/)
           value = args.length == 1 ? args.first : args
           instance_variable_set("@#{match[1]}", value)
         else
-          if block_given?
-            instance_variable_set("@#{meth}", args.empty? ? args : blk.call)
+          if args.empty?
+            instance_variable_get("@#{meth}")
           else
-            if args.empty?
-              instance_variable_get("@#{meth}")
-            else
-                value = args.length == 1 ? args.first : args
-              instance_variable_set("@#{meth}", value)
-            end
+            value = args.length == 1 ? args.first : args
+            instance_variable_set("@#{meth}", value)
           end
         end
+        
       end
     end
+    
   end
   
-  module InstanceMethods
-    def at
-      @_method_to_instance_variable_proxy ||= MethodToInstanceVariableProxy.new(self)
-    end
+  def at
+    @_method_to_instance_variable_proxy ||= MethodToInstanceVariableProxy.new(self)
   end
+  
 end
 
-require 'at/core_ext'
+require 'at/import'
