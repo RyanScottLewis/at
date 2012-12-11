@@ -13,24 +13,25 @@ end
 spec = Gem::Specification.new do |s|
   
   # Variables
-  s.name = 'at'
-  s.author = 'Ryan Scott Lewis'
-  s.email = 'ryan@rynet.us'
-  s.summary = 'Easily access instance variables on your objects as if they were attributes.'
+  s.name        = 'at'
+  s.author      = 'Ryan Scott Lewis'
+  s.email       = 'ryan@rynet.us'
+  s.summary     = 'Easily access instance variables on your objects as if they were attributes.'
+  s.description = 'Make instance variables accessible for testing purposes.'
   
   # Dependencies
-  s.add_dependency 'version', '~> 1.0.0'
+  s.add_dependency 'version', '~> 1.0'
+  s.add_development_dependency 'activesupport', '~> 3.2'
   s.add_development_dependency 'guard-rspec', '~> 2.1'
   s.add_development_dependency 'guard-yard', '~> 2.0'
   s.add_development_dependency 'rb-fsevent', '~> 0.9'
   s.add_development_dependency 'fuubar', '~> 1.1'
-  s.add_development_dependency 'redcarpet', '~> 2.2.2'
+  s.add_development_dependency 'redcarpet', '~> 2.2'
   s.add_development_dependency 'github-markup', '~> 0.7'
   
   # Pragmatically set variables
   s.homepage = "http://github.com/RyanScottLewis/#{s.name}"
   s.version = Pathname.glob('VERSION*').first.read
-  s.description = Pathname.glob('README*').first.read
   s.require_paths = ['lib']
   s.files        = `git ls-files`.lines.to_a.collect { |s| s.strip }
   s.executables  = `git ls-files -- bin/*`.lines.to_a.collect { |s| File.basename(s.strip) }
