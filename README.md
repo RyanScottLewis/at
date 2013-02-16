@@ -207,6 +207,6 @@ p app.config.port     # => 8080
 
 ## Copyright
 
-Copyright © 2012 Ryan Scott Lewis <ryan@rynet.us>.
+Copyright © 2012-2013 Ryan Scott Lewis <ryan@rynet.us>.
 
 The MIT License (MIT) - See LICENSE for further details.
