@@ -89,11 +89,11 @@ the `At#at` method. Luckily, the `at` method is just an alias of the `_at` metho
 ```ruby
 describe Event do
   
-  let(:event_at) { DateTime.now }
-  
-  before(:all) { subject._at.at = event_at }
-  
   describe "#at" do
+    
+    let(:event_at) { DateTime.now }
+    
+    before(:all) { subject._at.at = event_at }
     
     it 'should return the DateTime the Event is happening' do
       subject.at.should == event_at
