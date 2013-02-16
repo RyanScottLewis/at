@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# TODO: Move classes to spec/support
+
 class Configuration
   attr_reader :configuration
   
@@ -9,13 +11,17 @@ class Configuration
 end
 
 describe Configuration do
+  
   describe "#configuration" do
+    
     it "should return the @configuration instance variable" do
       subject.configuration.should == "default"
       subject.at.configuration = "the result"
       subject.configuration.should == "the result"
     end
+    
   end
+  
 end
 
 #===-----------------------------------------------------------------------===#
@@ -31,6 +37,7 @@ class User
 end
 
 describe User do
+  
   describe "#initialize" do
     subject { User.new("John", "Doe") }
     
@@ -60,6 +67,7 @@ describe User do
       Proc.new { subject.last_name }.should raise_error(NoMethodError)
     end
   end
+  
 end
 
 #===-----------------------------------------------------------------------===#
@@ -103,3 +111,68 @@ describe Twitter do
     end
   end
 end
+
+#===-----------------------------------------------------------------------===#
+
+# This class has it's own `at` method
+class Event
+  
+  attr_reader :at
+  
+end
+
+describe Event do
+  
+  let(:event_at) { DateTime.now }
+  
+  before(:all) { subject._at.at = event_at }
+  
+  describe "#at" do
+    
+    it 'should return the DateTime the Event is happening' do
+      subject.at.should == event_at
+    end
+    
+  end
+  
+end
+
+
+
+
+
+
+
+
+
+# class Application
+#   
+#   class Config
+#     attr_reader :hostname, :port
+#   end
+#   
+#   attr_reader :config
+#   
+#   def initialize(&block)
+#     @config = Config.new
+#     
+#     configure(&block) if block_given?
+#   end
+#   
+#   def configure(&block)
+#     raise ArgumentError, 'block must be supplied' unless block_given?
+#     delegator = At::InstanceVariableDelegator.new(@config)
+#     
+#     block.call(delegator)
+#   end
+#   
+# end
+# 
+# app = Application.new
+# app.configure do |c|
+#   c.hostname = 'example.com'
+#   c.port = 8080
+# end
+# 
+# p app.config.hostname # => 'example.com'
+# p app.config.port     # => 8080

@@ -1,39 +1,13 @@
 require 'version'
+require 'at/instance_methods'
 
+# `At` is a small library provides an `at` method for all Objects which allows you to access instance variables
+# on an object as if they were accessors for testing purposes, usually within test setups and teardowns
 module At
-  
   is_versioned
-  
-  class MethodToInstanceVariableProxy
-    
-    def initialize(parent)
-      @parent = parent
-    end
-    
-    def method_missing(meth, *args)
-      @parent.instance_eval do
-        
-        if match = meth.to_s.match(/(.*)\=$/)
-          value = args.length == 1 ? args.first : args
-          instance_variable_set("@#{match[1]}", value)
-        else
-          if args.empty?
-            instance_variable_get("@#{meth}")
-          else
-            value = args.length == 1 ? args.first : args
-            instance_variable_set("@#{meth}", value)
-          end
-        end
-        
-      end
-    end
-    
-  end
-  
-  def at
-    @_method_to_instance_variable_proxy ||= MethodToInstanceVariableProxy.new(self)
-  end
-  
 end
 
-require 'at/import'
+# Here, we include At::InstanceMethods to the Object class.
+class Object
+  include At::InstanceMethods
+end
