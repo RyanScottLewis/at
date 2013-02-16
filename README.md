@@ -129,16 +129,16 @@ end
 
 ```ruby
 require 'user'
-```
-
-`spec/user_spec.rb`
-
-```ruby
 require 'at/instance_methods'
 
 class User
   include At::InstanceMethods
 end
+```
+
+`spec/user_spec.rb`
+
+```ruby
 
 describe User do
   
