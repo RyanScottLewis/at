@@ -1,44 +1,39 @@
 # At
 
-`At` is a small library that allows you to access instance variables on an object as 
-if they were `attr_accessor`s for testing purposes.
-
-Basically, `at` directly translates this:
-
-```ruby
-value = object.instance_eval { @instance_variable }
-object.instance_eval { @instance_variable = "#{value}!" }
-```
-
-into this:
-
-```ruby
-value = object.at.instance_variable
-object.at.instance_variable = "#{value}!"
-```
+`At` is a small library provides an `at` method for all Objects which allows you to access instance variables
+on an object as if they were accessors for testing purposes, usually within test setups and teardowns.
 
 ## Install
 
-### Bundler: `gem 'at'`
+### Bundler: `gem 'at'` in `group :test`
 
 ### RubyGems: `gem install at`
 
 ## Usage
 
-If I want to test the output of the `full_name` method in my `User` class
-below, I would normally have three options for testing all possible outcomes; 
-initialize a `User` object for each test case, initialize one `User` object and 
-use `instance_eval` to set the instance variables individually, or create 
-`attr_accessor`s for each instance variable I would like to test. In Rspec, I 
-can use `assigns` to test the value of the instance variable, but I can't 
-_get_ the value of the instance variable.
+### TL;DR
 
-`At` solves these problems.
+Basically, `at` directly translates this:
 
 ```ruby
-require 'at'
+value = user.instance_eval { @name }
+user.instance_eval { @name = "#{value}!" }
+```
 
+into this:
+
+```ruby
+value = user.at.name
+user.at.name = "#{value}!"
+```
+
+### Use Case
+
+`lib/user.rb`
+
+```ruby
 class User
+  
   def initialize(first_name=nil, last_name=nil)
     @first_name, @last_name = first_name, last_name
   end
@@ -46,15 +41,35 @@ class User
   def full_name
     [@first_name, @last_name].compact.join(" ")
   end
+  
 end
+```
 
-describe User, '#full_name' do
-  it 'should output the full name correctly' do
-    subject.at.first_name = 'John'
-    subject.at.last_name = 'Doe'
-      
-    subject.full_name.should == 'John Doe'
+`spec/spec_helper.rb`
+
+```ruby
+require 'user'
+require 'at'
+```
+
+`spec/user_spec.rb`
+
+```ruby
+describe User do
+  
+  describe '#full_name' do
+    
+    before :all do
+      subject.at.first_name = 'John'
+      subject.at.last_name = 'Doe'
+    end
+    
+    it 'should output the full name correctly' do
+      subject.full_name.should == 'John Doe'
+    end
+    
   end
+  
 end
 ```
 
