@@ -77,6 +77,10 @@ Check out the specs for a better usage example.
 
 ## FAQ
 
+### Why is this named "At"?
+
+Because the at symbol (`@`) is how an instance variable is declared in Ruby!
+
 ### What if my class defines an `at` instance method?
 
 `At::InstanceMethods` is included on the `Object` class, so when your class defines the `at` instance method, you are actually overwriting
