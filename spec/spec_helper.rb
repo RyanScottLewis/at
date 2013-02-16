@@ -1,2 +1,2 @@
 require 'bundler/setup'
-require 'at'
+require 'at/setup'
