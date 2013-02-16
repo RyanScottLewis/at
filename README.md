@@ -77,7 +77,7 @@ Check out the specs for a better usage example.
 
 ## FAQ
 
-### What if my class defines a `at` instance method?
+### What if my class defines an `at` instance method?
 
 `At::InstanceMethods` is included on the `Object` class, so when your class defines the `at` instance method, you are actually overwriting
 the `At::InstanceMethods#at` method. Luckily, the `at` method is just an alias of the `_at` method, which you can use instead:
