@@ -49,7 +49,7 @@ end
 
 ```ruby
 require 'user'
-require 'at'
+require 'at/setup'
 ```
 
 `spec/user_spec.rb`
@@ -83,8 +83,8 @@ Because the at symbol (`@`) is how an instance variable is declared in Ruby!
 
 ### What if my class defines an `at` instance method?
 
-`At::InstanceMethods` is included on the `Object` class, so when your class defines the `at` instance method, you are actually overwriting
-the `At::InstanceMethods#at` method. Luckily, the `at` method is just an alias of the `_at` method, which you can use instead:
+`At` is included on the `Object` class, so when your class defines the `at` instance method, you are actually overwriting
+the `At#at` method. Luckily, the `at` method is just an alias of the `_at` method, which you can use instead:
 
 ```ruby
 describe Event do
@@ -106,8 +106,7 @@ end
 
 ### How can I include the `at` and `_at` methods on a single object?
 
-Include `At::InstanceMethods` to the object's class:
-
+Include `At` to the object's class:
 
 `lib/user.rb`
 
@@ -129,10 +128,10 @@ end
 
 ```ruby
 require 'user'
-require 'at/instance_methods'
+require 'at'
 
 class User
-  include At::InstanceMethods
+  include At
 end
 ```
 
@@ -153,6 +152,28 @@ describe User do
       subject.full_name.should == 'John Doe'
     end
     
+  end
+  
+end
+```
+
+### How can I include the `at` method outside of a test environment?
+
+Same premise as the above answer:
+
+```ruby
+require 'at'
+
+class User
+  
+  include At
+  
+  def initialize(first_name=nil, last_name=nil)
+    @first_name, @last_name = first_name, last_name
+  end
+  
+  def full_name
+    [@first_name, @last_name].compact.join(" ")
   end
   
 end
@@ -188,7 +209,7 @@ class Application
   
 end
 
-
+# Usage:
 app = Application.new
 app.configure do |c|
   c.hostname = 'example.com'
